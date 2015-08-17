@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mike Image Maker</title>
+
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+  <form id="form1" runat="server">
+          <input type='file' id="imgInp" />
+          <img id="blah" src="#" alt="your image" class='watermark'/>
+          <a id='download' href="#" download>Download</a>
+      </form>
+
+        <script src='js/watermark.jquery.min.js'></script>
+        <script type="text/javascript">
+
+        var config = {
+          "opacity": 40,
+          "position": "topleft",
+          "path": "/img/jq-watermark.png"     };
+        // $(document).ready(function(){
+        //   $(document).watermark(config);
+        // });
+      </script>
+      <script type="text/javascript">
+        function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                      var config = {
+                        "opacity": 40,
+                        "position": "topleft",
+                        "path": "img/jq-watermark.png"     };
+                        
+                        $('#blah').attr('src', e.target.result);
+                        $('#blah').watermark(config);
+                        $('#download').delay( 1000 ).queue(function(next) { $(this).attr('href', $('#blah').attr('src')); next() });
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
+            $("#imgInp").change(function(){
+                readURL(this);
+            });
+      </script>
+      <!-- <canvas style="display: none;" width="300" height="200"></canvas> -->
+
+</body>
+</html>
